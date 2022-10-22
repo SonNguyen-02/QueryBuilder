@@ -5,6 +5,16 @@ public interface BaseStatement {
     /**
      * <strong>Build Statement:</strong><br/>
      * Get compiled query string<br/>
+     * Build an statement query and returns the query string<br/>
+     * And Auto clear statement
+     *
+     * @return query
+     */
+    String buildStatement();
+
+    /**
+     * <strong>Build Statement:</strong><br/>
+     * Get compiled query string<br/>
      * Build an statement query and returns the query string
      *
      * @param clear If enabled, the data will be cleared

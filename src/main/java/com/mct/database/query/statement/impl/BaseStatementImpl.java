@@ -33,4 +33,8 @@ abstract class BaseStatementImpl implements BaseStatement {
         }
     }
 
+    @Override
+    public String buildStatement() {
+        return buildStatement(true);
+    }
 }
