@@ -29,7 +29,7 @@ public class HavingImpl<T extends BaseStatement> extends BaseIngredient<T> imple
         qbHaving.clear();
     }
 
-    private T _hv(String key, String value, String type) {
+    private T _hv(String key, Object value, String type) {
         qbHaving.add((qbHaving.isEmpty() ? "" : type) + _whv(key, value));
         return mStatement;
     }
@@ -43,7 +43,7 @@ public class HavingImpl<T extends BaseStatement> extends BaseIngredient<T> imple
      * {@inheritDoc}
      */
     @Override
-    public T having(@NotNull String key, String value) {
+    public T having(@NotNull String key, Object value) {
         return _hv(key, value, "AND ");
     }
 
@@ -59,7 +59,7 @@ public class HavingImpl<T extends BaseStatement> extends BaseIngredient<T> imple
      * {@inheritDoc}
      */
     @Override
-    public T orHaving(@NotNull String key, String value) {
+    public T orHaving(@NotNull String key, Object value) {
         return _hv(key, value, "OR ");
     }
 

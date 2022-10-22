@@ -10,37 +10,37 @@ public interface Condition {
      * <strong>_whv:</strong> Combine key value pair<br/>
      * <p/>
      * Called by<br/>
-     * {@link Having#having(String, String)}<br/>
-     * {@link Having#orHaving(String, String)}<br/>
-     * {@link Where#where(String, String)}<br/>
-     * {@link Where#orWhere(String, String)}<br/>
+     * {@link Having#having(String, Object)}<br/>
+     * {@link Having#orHaving(String, Object)}<br/>
+     * {@link Where#where(String, Object)}<br/>
+     * {@link Where#orWhere(String, Object)}<br/>
      *
      * @param key   key
      * @param value value
      * @return this
      */
     @NotNull
-    default String _whv(String key, String value) {
+    default String _whv(String key, Object value) {
         if (key == null || (key = key.trim()).isEmpty()) {
             throw new BuilderError("The key is invalid");
         }
-        value = value == null ? "" : value.trim();
+        String mVal = value == null ? "" : value.toString().trim();
         String keyLower = key.toLowerCase();
 
         if (_hasOperator(keyLower)) {
             if (!keyLower.matches("[\\w.]+\\s+(is null|is not null)")) {
                 key += " ";
-                value = Utils.escape(value);
+                mVal = Utils.escape(mVal);
             }
         } else {
-            if (value.isEmpty()) {
+            if (mVal.isEmpty()) {
                 key += " IS NULL";
             } else {
                 key += " = ";
-                value = Utils.escape(value);
+                mVal = Utils.escape(mVal);
             }
         }
-        return key + value;
+        return key + mVal;
     }
 
     /**

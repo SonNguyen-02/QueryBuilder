@@ -94,7 +94,7 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update where(String key, String value) {
+    public Update where(String key, Object value) {
         return mWhere.where(key, value);
     }
 
@@ -110,7 +110,7 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update orWhere(String key, String value) {
+    public Update orWhere(String key, Object value) {
         return mWhere.orWhere(key, value);
     }
 
@@ -126,7 +126,7 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update whereIn(String key, String[] value) {
+    public Update whereIn(String key, Object[] value) {
         return mWhere.whereIn(key, value);
     }
 
@@ -134,7 +134,7 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update orWhereIn(String key, String[] value) {
+    public Update orWhereIn(String key, Object[] value) {
         return mWhere.orWhereIn(key, value);
     }
 
@@ -142,7 +142,7 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update whereNotIn(String key, String[] value) {
+    public Update whereNotIn(String key, Object[] value) {
         return mWhere.whereNotIn(key, value);
     }
 
@@ -150,7 +150,7 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update orWhereNotIn(String key, String[] value) {
+    public Update orWhereNotIn(String key, Object[] value) {
         return mWhere.orWhereNotIn(key, value);
     }
 

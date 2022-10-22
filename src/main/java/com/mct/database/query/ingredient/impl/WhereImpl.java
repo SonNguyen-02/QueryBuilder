@@ -76,9 +76,9 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
     }
 
     /**
-     * {@link #_whv(String, String)}
+     * {@link #_whv(String, Object)}
      */
-    private T _wh(String key, String value, String type) {
+    private T _wh(String key, Object value, String type) {
         qbWhere.add((qbWhere.isEmpty() ? _groupGetType("") : _groupGetType(type)) + _whv(key, value));
         return mStatement;
     }
@@ -92,7 +92,7 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
      * {@inheritDoc}
      */
     @Override
-    public T where(String key, String value) {
+    public T where(String key, Object value) {
         return _wh(key, value, "AND ");
     }
 
@@ -108,7 +108,7 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
      * {@inheritDoc}
      */
     @Override
-    public T orWhere(String key, String value) {
+    public T orWhere(String key, Object value) {
         return _wh(key, value, "OR ");
     }
 
@@ -124,10 +124,10 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
      * <strong>_whereIn:</strong><br/>
      * <p/>
      * Called by<br/>
-     * {@link Where#whereIn(String, String[])}<br/>
-     * {@link Where#orWhereIn(String, String[])}<br/>
-     * {@link Where#whereNotIn(String, String[])}<br/>
-     * {@link Where#orWhereNotIn(String, String[])}<br/>
+     * {@link Where#whereIn(String, Object[])}<br/>
+     * {@link Where#orWhereIn(String, Object[])}<br/>
+     * {@link Where#whereNotIn(String, Object[])}<br/>
+     * {@link Where#orWhereNotIn(String, Object[])}<br/>
      *
      * @param key    The field to search
      * @param values The values searched on
@@ -135,7 +135,7 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
      * @param type   AND || OR
      * @return this
      */
-    private T _whereIn(String key, String[] values, boolean not, String type) {
+    private T _whereIn(String key, Object[] values, boolean not, String type) {
         if (key == null || key.trim().isEmpty()) {
             throw new BuilderError("The key is invalid");
         }
@@ -144,10 +144,13 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
             String prefix = this.qbWhere.isEmpty() ? _groupGetType("") : _groupGetType(type);
             String notStr = not ? " NOT" : "";
             ArrayList<String> arrTmp = new ArrayList<>();
-            for (String value : values) {
-                value = value.trim();
-                if (!value.isEmpty()) {
-                    arrTmp.add(Utils.escape(value));
+            for (Object value : values) {
+                if (value == null) {
+                    continue;
+                }
+                String s = value.toString().trim();
+                if (!s.isEmpty()) {
+                    arrTmp.add(Utils.escape(s));
                 }
             }
             String whereIn = prefix + key.trim() + notStr + " IN (" + Utils.implode(arrTmp.toArray(new String[0]), ", ") + ")";
@@ -160,7 +163,7 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
      * {@inheritDoc}
      */
     @Override
-    public T whereIn(String key, String[] value) {
+    public T whereIn(String key, Object[] value) {
         return _whereIn(key, value, false, "AND ");
     }
 
@@ -168,7 +171,7 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
      * {@inheritDoc}
      */
     @Override
-    public T orWhereIn(String key, String[] value) {
+    public T orWhereIn(String key, Object[] value) {
         return _whereIn(key, value, false, "OR ");
     }
 
@@ -176,7 +179,7 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
      * {@inheritDoc}
      */
     @Override
-    public T whereNotIn(String key, String[] value) {
+    public T whereNotIn(String key, Object[] value) {
         return _whereIn(key, value, true, "AND ");
     }
 
@@ -184,7 +187,7 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
      * {@inheritDoc}
      */
     @Override
-    public T orWhereNotIn(String key, String[] value) {
+    public T orWhereNotIn(String key, Object[] value) {
         return _whereIn(key, value, true, "OR ");
     }
 

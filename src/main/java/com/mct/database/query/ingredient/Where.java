@@ -110,7 +110,7 @@ public interface Where<T> {
      * @param value The value searched on
      * @return this
      */
-    T where(String key, String value);
+    T where(String key, Object value);
 
     /**
      * <strong>Where:</strong><br/>
@@ -144,7 +144,7 @@ public interface Where<T> {
      * @param value The value searched on
      * @return this
      */
-    T orWhere(String key, String value);
+    T orWhere(String key, Object value);
 
     /**
      * <strong>Or Where:</strong><br/>
@@ -165,7 +165,7 @@ public interface Where<T> {
      * <strong>Where In:</strong><br/>
      * Generates a WHERE field IN ('item', 'item') SQL query joined with AND if appropriate<br/>
      * -VD:
-     * <br/>&nbsp;&nbsp;String[] names = new String[]{"Frank", "Todd", "James"};
+     * <br/>&nbsp;&nbsp;Object[] names = new Object[]{"Frank", "Todd", "James"};
      * <br/>&nbsp;&nbsp;where_in('username', names);
      * <br/>
      * -Produces:
@@ -175,13 +175,13 @@ public interface Where<T> {
      * @param value The values searched on
      * @return this
      */
-    T whereIn(String key, String[] value);
+    T whereIn(String key, Object[] value);
 
     /**
      * <strong>Or Where In:</strong><br/>
      * Generates a WHERE field IN ('item', 'item') SQL query joined with OR if appropriate<br/>
      * -VD:
-     * <br/>&nbsp;&nbsp;String[] names = new String[]{"Frank", "Todd", "James"};
+     * <br/>&nbsp;&nbsp;Object[] names = new Object[]{"Frank", "Todd", "James"};
      * <br/>&nbsp;&nbsp;where_in('username', names);
      * <br/>
      * -Produces:
@@ -191,13 +191,13 @@ public interface Where<T> {
      * @param value The values searched on
      * @return this
      */
-    T orWhereIn(String key, String[] value);
+    T orWhereIn(String key, Object[] value);
 
     /**
      * <strong>Where Not In:</strong><br/>
      * Generates a WHERE field IN ('item', 'item') SQL query joined with AND if appropriate<br/>
      * -VD:
-     * <br/>&nbsp;&nbsp;String[] names = new String[]{"Frank", "Todd", "James"};
+     * <br/>&nbsp;&nbsp;Object[] names = new Object[]{"Frank", "Todd", "James"};
      * <br/>&nbsp;&nbsp;where_in('username', names);
      * <br/>
      * -Produces:
@@ -207,13 +207,13 @@ public interface Where<T> {
      * @param value The values searched on
      * @return this
      */
-    T whereNotIn(String key, String[] value);
+    T whereNotIn(String key, Object[] value);
 
     /**
      * <strong>Or Where Not In:</strong><br/>
      * Generates a WHERE field IN ('item', 'item') SQL query joined with OR if appropriate<br/>
      * -VD:
-     * <br/>&nbsp;&nbsp;String[] names = new String[]{"Frank", "Todd", "James"};
+     * <br/>&nbsp;&nbsp;Object[] names = new Object[]{"Frank", "Todd", "James"};
      * <br/>&nbsp;&nbsp;where_in('username', names);
      * <br/>
      * -Produces:
@@ -223,7 +223,7 @@ public interface Where<T> {
      * @param value The values searched on
      * @return this
      */
-    T orWhereNotIn(String key, String[] value);
+    T orWhereNotIn(String key, Object[] value);
 
     /**
      * <strong>Like:</strong><br/>

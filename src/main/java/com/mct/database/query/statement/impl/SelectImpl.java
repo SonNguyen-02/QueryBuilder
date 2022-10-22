@@ -125,7 +125,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select where(String key, String value) {
+    public Select where(String key, Object value) {
         return mWhere.where(key, value);
     }
 
@@ -141,7 +141,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select orWhere(String key, String value) {
+    public Select orWhere(String key, Object value) {
         return mWhere.orWhere(key, value);
     }
 
@@ -157,7 +157,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select whereIn(String key, String[] value) {
+    public Select whereIn(String key, Object[] value) {
         return mWhere.whereIn(key, value);
     }
 
@@ -165,7 +165,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select orWhereIn(String key, String[] value) {
+    public Select orWhereIn(String key, Object[] value) {
         return mWhere.orWhereIn(key, value);
     }
 
@@ -173,7 +173,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select whereNotIn(String key, String[] value) {
+    public Select whereNotIn(String key, Object[] value) {
         return mWhere.whereNotIn(key, value);
     }
 
@@ -181,7 +181,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select orWhereNotIn(String key, String[] value) {
+    public Select orWhereNotIn(String key, Object[] value) {
         return mWhere.orWhereNotIn(key, value);
     }
 
@@ -237,7 +237,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select having(@NotNull String key, String value) {
+    public Select having(@NotNull String key, Object value) {
         return mHaving.having(key, value);
     }
 
@@ -253,7 +253,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select orHaving(@NotNull String key, String value) {
+    public Select orHaving(@NotNull String key, Object value) {
         return mHaving.orHaving(key, value);
     }
 

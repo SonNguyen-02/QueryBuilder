@@ -77,7 +77,7 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
      * {@inheritDoc}
      */
     @Override
-    public Delete where(String key, String value) {
+    public Delete where(String key, Object value) {
         return mWhere.where(key, value);
     }
 
@@ -93,7 +93,7 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
      * {@inheritDoc}
      */
     @Override
-    public Delete orWhere(String key, String value) {
+    public Delete orWhere(String key, Object value) {
         return mWhere.orWhere(key, value);
     }
 
@@ -109,7 +109,7 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
      * {@inheritDoc}
      */
     @Override
-    public Delete whereIn(String key, String[] value) {
+    public Delete whereIn(String key, Object[] value) {
         return mWhere.whereIn(key, value);
     }
 
@@ -117,7 +117,7 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
      * {@inheritDoc}
      */
     @Override
-    public Delete orWhereIn(String key, String[] value) {
+    public Delete orWhereIn(String key, Object[] value) {
         return mWhere.orWhereIn(key, value);
     }
 
@@ -125,7 +125,7 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
      * {@inheritDoc}
      */
     @Override
-    public Delete whereNotIn(String key, String[] value) {
+    public Delete whereNotIn(String key, Object[] value) {
         return mWhere.whereNotIn(key, value);
     }
 
@@ -133,7 +133,7 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
      * {@inheritDoc}
      */
     @Override
-    public Delete orWhereNotIn(String key, String[] value) {
+    public Delete orWhereNotIn(String key, Object[] value) {
         return mWhere.orWhereNotIn(key, value);
     }
 

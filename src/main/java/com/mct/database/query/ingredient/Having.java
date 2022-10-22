@@ -11,7 +11,7 @@ public interface Having<T> {
      * @param value The values searched on
      * @return this
      */
-    T having(@NotNull String key, String value);
+    T having(@NotNull String key, Object value);
 
     /**
      * <strong>Having:</strong><br/>
@@ -34,7 +34,7 @@ public interface Having<T> {
      * @param value The values searched on
      * @return this
      */
-    T orHaving(@NotNull String key, String value);
+    T orHaving(@NotNull String key, Object value);
 
     /**
      * <strong>Having:</strong><br/>
