@@ -136,26 +136,23 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
      * @return this
      */
     private T _whereIn(String key, String[] values, boolean not, String type) {
-        if (key == null || key.isEmpty()) {
-            throw new BuilderError("Key is empty");
+        if (key == null || key.trim().isEmpty()) {
+            throw new BuilderError("The key is invalid");
         }
-        if (values == null || values.length == 0) {
-            throw new BuilderError("Value is empty");
-        }
-
-        String prefix = this.qbWhere.isEmpty() ? _groupGetType("") : _groupGetType(type);
-        String notStr = not ? " NOT" : "";
-        ArrayList<String> arrTmp = new ArrayList<>();
-        for (String value : values) {
-            value = value.trim();
-            if (!value.isEmpty()) {
-                arrTmp.add(Utils.escape(value));
+        // empty -> skip this statement
+        if (values != null && values.length != 0) {
+            String prefix = this.qbWhere.isEmpty() ? _groupGetType("") : _groupGetType(type);
+            String notStr = not ? " NOT" : "";
+            ArrayList<String> arrTmp = new ArrayList<>();
+            for (String value : values) {
+                value = value.trim();
+                if (!value.isEmpty()) {
+                    arrTmp.add(Utils.escape(value));
+                }
             }
+            String whereIn = prefix + key.trim() + notStr + " IN (" + Utils.implode(arrTmp.toArray(new String[0]), ", ") + ")";
+            this.qbWhere.add(whereIn);
         }
-
-        String whereIn = prefix + key.trim() + notStr + " IN (" + Utils.implode(arrTmp.toArray(new String[0]), ", ") + ")";
-        this.qbWhere.add(whereIn);
-
         return mStatement;
     }
 
@@ -208,28 +205,33 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
      * @return this
      */
     private T _like(String field, String match, String type, @NotNull LikeType likeType, String not) {
-        String likeStatement;
-        field = field.trim();
-        match = Utils.escapeLikeStr(match.trim());
-        String prefix = qbWhere.isEmpty() ? _groupGetType("") : _groupGetType(type);
-        switch (likeType) {
-            case NONE:
-                match = "'" + match + "'";
-                break;
-            case BEFORE:
-                match = "'%" + match + "'";
-                break;
-            case AFTER:
-                match = "'" + match + "%'";
-                break;
-            case BOTH:
-            default:
-                match = "'%" + match + "%'";
-                break;
+        if (field == null || field.trim().isEmpty()) {
+            throw new BuilderError("The field is invalid");
         }
-        likeStatement = prefix + field + not + " LIKE " + match;
-        qbWhere.add(likeStatement);
-
+        field = field.trim();
+        // empty -> skip this statement
+        if (match != null && !match.trim().isEmpty()) {
+            match = Utils.escapeLikeStr(match.trim());
+            String prefix = qbWhere.isEmpty() ? _groupGetType("") : _groupGetType(type);
+            //noinspection EnhancedSwitchMigration
+            switch (likeType) {
+                case NONE:
+                    match = "'" + match + "'";
+                    break;
+                case BEFORE:
+                    match = "'%" + match + "'";
+                    break;
+                case AFTER:
+                    match = "'" + match + "%'";
+                    break;
+                case BOTH:
+                default:
+                    match = "'%" + match + "%'";
+                    break;
+            }
+            String likeStatement = prefix + field + not + " LIKE " + match;
+            qbWhere.add(likeStatement);
+        }
         return mStatement;
     }
 

@@ -22,7 +22,7 @@ public interface Condition {
     @NotNull
     default String _whv(String key, String value) {
         if (key == null || (key = key.trim()).isEmpty()) {
-            throw new BuilderError("The key invalid");
+            throw new BuilderError("The key is invalid");
         }
         value = value == null ? "" : value.trim();
         String keyLower = key.toLowerCase();

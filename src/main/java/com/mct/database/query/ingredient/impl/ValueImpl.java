@@ -37,7 +37,7 @@ public class ValueImpl<T extends BaseStatement> extends BaseIngredient<T> implem
     public T set(@NotNull HashMap<String, Object> dataSet) {
         dataSet.forEach((key, value) -> {
             if (key == null || key.isEmpty()) {
-                throw new BuilderError("Key is empty");
+                throw new BuilderError("The key is invalid");
             }
             if (value != null) {
                 dataSet.replace(key, Utils.escape(value.toString()));
@@ -53,7 +53,7 @@ public class ValueImpl<T extends BaseStatement> extends BaseIngredient<T> implem
     @Override
     public T set(@NotNull String key, Object value) {
         if (key.isEmpty()) {
-            throw new BuilderError("Key is empty");
+            throw new BuilderError("The key is invalid");
         }
         HashMap<String, Object> dataSet = new HashMap<>();
         dataSet.put(key, value);
