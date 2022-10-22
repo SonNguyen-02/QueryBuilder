@@ -38,7 +38,7 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update set(HashMap<String, String> dataSet) {
+    public Update set(HashMap<String, Object> dataSet) {
         return mValue.set(dataSet);
     }
 
@@ -46,7 +46,7 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update set(String key, String value) {
+    public Update set(String key, Object value) {
         return mValue.set(key, value);
     }
 

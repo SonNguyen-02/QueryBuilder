@@ -10,13 +10,13 @@ import java.util.HashMap;
 
 public class ValueImpl<T extends BaseStatement> extends BaseIngredient<T> implements Value<T> {
 
-    private final HashMap<String, String> qbSet = new HashMap<>();
+    private final HashMap<String, Object> qbSet = new HashMap<>();
 
     public ValueImpl(T statement) {
         super(statement);
     }
 
-    public HashMap<String, String> getValues() {
+    public HashMap<String, Object> getValues() {
         return new HashMap<>(qbSet);
     }
 
@@ -34,13 +34,13 @@ public class ValueImpl<T extends BaseStatement> extends BaseIngredient<T> implem
      * {@inheritDoc}
      */
     @Override
-    public T set(@NotNull HashMap<String, String> dataSet) {
+    public T set(@NotNull HashMap<String, Object> dataSet) {
         dataSet.forEach((key, value) -> {
-            if (key.isEmpty()) {
+            if (key == null || key.isEmpty()) {
                 throw new BuilderError("Key is empty");
             }
             if (value != null) {
-                dataSet.replace(key, Utils.escape(value));
+                dataSet.replace(key, Utils.escape(value.toString()));
             }
         });
         qbSet.putAll(dataSet);
@@ -51,11 +51,11 @@ public class ValueImpl<T extends BaseStatement> extends BaseIngredient<T> implem
      * {@inheritDoc}
      */
     @Override
-    public T set(@NotNull String key, String value) {
+    public T set(@NotNull String key, Object value) {
         if (key.isEmpty()) {
             throw new BuilderError("Key is empty");
         }
-        HashMap<String, String> dataSet = new HashMap<>();
+        HashMap<String, Object> dataSet = new HashMap<>();
         dataSet.put(key, value);
         return set(dataSet);
     }

@@ -33,7 +33,7 @@ public class InsertImpl extends BaseStatementImpl implements Insert {
      * {@inheritDoc}
      */
     @Override
-    public Insert set(HashMap<String, String> dataSet) {
+    public Insert set(HashMap<String, Object> dataSet) {
         return mValue.set(dataSet);
     }
 
@@ -41,7 +41,7 @@ public class InsertImpl extends BaseStatementImpl implements Insert {
      * {@inheritDoc}
      */
     @Override
-    public Insert set(String key, String value) {
+    public Insert set(String key, Object value) {
         return mValue.set(key, value);
     }
 

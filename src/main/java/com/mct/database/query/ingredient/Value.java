@@ -10,7 +10,7 @@ public interface Value<T> {
      * @param dataSet key <=> column
      * @return this
      */
-    T set(HashMap<String, String> dataSet);
+    T set(HashMap<String, Object> dataSet);
 
     /**
      * <strong>Set:</strong><br/>
@@ -20,6 +20,6 @@ public interface Value<T> {
      * @param value value
      * @return this
      */
-    T set(String key, String value);
+    T set(String key, Object value);
 
 }
