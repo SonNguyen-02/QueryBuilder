@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface Group<T> {
     /**
-     * <strong>Group By:</strong><br>
+     * <strong>Group By:</strong><br/>
      *
      * @param groupBy groupBy
      * @return this
@@ -12,7 +12,7 @@ public interface Group<T> {
     T groupBy(@NotNull String groupBy);
 
     /**
-     * <strong>Group By:</strong><br>
+     * <strong>Group By:</strong><br/>
      *
      * @param groupBy groupBy
      * @return this

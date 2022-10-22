@@ -121,8 +121,13 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
     }
 
     /**
-     * <strong>_whereIn:</strong><br>
-     * Called by whereIn, orWhereIn, whereNotIn, orWhereNotIn
+     * <strong>_whereIn:</strong><br/>
+     * <p/>
+     * Called by<br/>
+     * {@link Where#whereIn(String, String[])}<br/>
+     * {@link Where#orWhereIn(String, String[])}<br/>
+     * {@link Where#whereNotIn(String, String[])}<br/>
+     * {@link Where#orWhereNotIn(String, String[])}<br/>
      *
      * @param key    The field to search
      * @param values The values searched on
@@ -187,9 +192,13 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
     }
 
     /**
-     * <strong>_like:</strong><br>
-     * <p>
-     * Called by like() | orLike() | notLike() | orNotLike()
+     * <strong>_like:</strong><br/>
+     * <p/>
+     * Called by<br/>
+     * {@link Where#like(String, String, LikeType)}<br/>
+     * {@link Where#orLike(String, String, LikeType)}<br/>
+     * {@link Where#notLike(String, String, LikeType)}<br/>
+     * {@link Where#orNotLike(String, String, LikeType)}<br/>
      *
      * @param field    The column to search
      * @param match    The search value
@@ -257,7 +266,7 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
     }
 
     /**
-     * <strong>_grStart:</strong><br>
+     * <strong>_grStart:</strong><br/>
      * Build query group for where condition
      *
      * @param not  not

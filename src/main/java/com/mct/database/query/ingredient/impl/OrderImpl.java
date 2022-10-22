@@ -29,7 +29,7 @@ public class OrderImpl<T extends BaseStatement> extends BaseIngredient<T> implem
     }
 
     /**
-     * <strong>_orderBy:</strong><br>
+     * <strong>_orderBy:</strong><br/>
      *
      * @param orderBy   orderBy
      * @param direction ASC or DESC

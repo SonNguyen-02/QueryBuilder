@@ -8,7 +8,7 @@ public interface Condition {
 
     /**
      * <strong>_whv:</strong> Combine key value pair<br/>
-     * <p>
+     * <p/>
      * Called by<br/>
      * {@link Having#having(String, String)}<br/>
      * {@link Having#orHaving(String, String)}<br/>
@@ -44,8 +44,8 @@ public interface Condition {
     }
 
     /**
-     * <strong>_whv:</strong><br>
-     * <p>
+     * <strong>_whv:</strong><br/>
+     * <p/>
      * Called by<br/>
      * {@link Having#having(String)}<br/>
      * {@link Having#orHaving(String)}<br/>
@@ -62,10 +62,9 @@ public interface Condition {
         return whereOrHaving.trim();
     }
 
-    static boolean _hasOperator(String str) {
+    static boolean _hasOperator(@NotNull String str) {
         String reg = "[\\w.]+\\s+(<|>|!=|=|>=|<=|is null|is not null)";
         return str.matches(reg);
     }
-
 
 }

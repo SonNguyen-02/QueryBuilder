@@ -29,11 +29,17 @@ public class ColumnImpl<T extends BaseStatement> extends BaseIngredient<T> imple
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public T column() {
         return column("*");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public T column(@NotNull String columns) {
         for (String val : columns.split(",")) {

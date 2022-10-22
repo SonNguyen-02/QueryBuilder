@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public interface Value<T> {
     /**
-     * <strong>Set:</strong><br>
+     * <strong>Set:</strong><br/>
      * Allows key/value pairs to be set for inserting or updating.
      *
      * @param dataSet key <=> column
@@ -13,7 +13,7 @@ public interface Value<T> {
     T set(HashMap<String, String> dataSet);
 
     /**
-     * <strong>Set:</strong><br>
+     * <strong>Set:</strong><br/>
      * Allows key/value pairs to be set for inserting or updating.
      *
      * @param key   key <=> column

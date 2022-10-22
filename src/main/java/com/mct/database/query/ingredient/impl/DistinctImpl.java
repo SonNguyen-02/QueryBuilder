@@ -21,6 +21,9 @@ public class DistinctImpl<T extends BaseStatement> extends BaseIngredient<T> imp
         mDistinct = false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public T distinct() {
         mDistinct = true;

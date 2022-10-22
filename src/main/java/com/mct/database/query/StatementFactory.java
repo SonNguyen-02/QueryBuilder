@@ -32,4 +32,7 @@ public class StatementFactory {
         return new DeleteImpl();
     }
 
+    private StatementFactory() {
+        throw new RuntimeException("Can't instance this class!");
+    }
 }

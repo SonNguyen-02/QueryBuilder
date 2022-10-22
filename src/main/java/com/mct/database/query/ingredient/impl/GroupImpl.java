@@ -28,11 +28,17 @@ public class GroupImpl<T extends BaseStatement> extends BaseIngredient<T> implem
         qbGroupBy.clear();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public T groupBy(@NotNull String groupBy) {
         return groupBy(groupBy.split(","));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public T groupBy(String @NotNull [] groupBy) {
         for (String val : groupBy) {

@@ -28,6 +28,9 @@ public class FromImpl<T extends BaseStatement> extends BaseIngredient<T> impleme
         qbFrom.clear();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public T from(@NotNull String from) {
         for (String val : from.split(",")) {
