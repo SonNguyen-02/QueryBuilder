@@ -31,11 +31,11 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
              * Clean if condition have an empty group
              * eg: name = 'lol' AND ()   =>   name = 'lol'
              */
-            if (where.matches("^.*\\(\s*\\).*$")) {
+            if (where.matches(".*\\( *\\).*")) {
                 String tmpRepl = "?";
                 String regex = "'.*?[^\\\\]'";
                 @RegExp
-                String reg = "(\s*\\(\s*\\)\s+(AND|OR)?)|(((AND|OR)(\sNOT)?)?\s+\\(\s*\\)\s*)";
+                String reg = "( *\\( *\\) +(AND|OR)?)|(((AND|OR)( NOT)?)? +\\( *\\) *)";
                 String result = replaceAlls(where.replaceAll(regex, tmpRepl), reg);
                 Matcher matcher = Pattern.compile(regex).matcher(where);
                 while (matcher.find()) {
