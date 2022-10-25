@@ -185,6 +185,9 @@ public class SelectImpl extends BaseStatementImpl implements Select {
         return mWhere.orWhereNotIn(key, value);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Select like(String field, String match) {
         return mWhere.like(field, match);
@@ -198,6 +201,9 @@ public class SelectImpl extends BaseStatementImpl implements Select {
         return mWhere.like(field, match, type);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Select orLike(String field, String match) {
         return mWhere.orLike(field, match);
@@ -211,6 +217,9 @@ public class SelectImpl extends BaseStatementImpl implements Select {
         return mWhere.orLike(field, match, likeType);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Select notLike(String field, String match) {
         return mWhere.notLike(field, match);
@@ -224,6 +233,9 @@ public class SelectImpl extends BaseStatementImpl implements Select {
         return mWhere.notLike(field, match, likeType);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Select orNotLike(String field, String match) {
         return mWhere.orNotLike(field, match);

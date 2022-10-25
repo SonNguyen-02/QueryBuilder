@@ -137,6 +137,9 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
         return mWhere.orWhereNotIn(key, value);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Delete like(String field, String match) {
         return mWhere.like(field, match);
@@ -150,6 +153,9 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
         return mWhere.like(field, match, type);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Delete orLike(String field, String match) {
         return mWhere.orLike(field, match);
@@ -163,6 +169,9 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
         return mWhere.orLike(field, match, likeType);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Delete notLike(String field, String match) {
         return mWhere.notLike(field, match);
@@ -176,6 +185,9 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
         return mWhere.notLike(field, match, likeType);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Delete orNotLike(String field, String match) {
         return mWhere.orNotLike(field, match);

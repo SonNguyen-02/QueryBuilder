@@ -154,6 +154,9 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
         return mWhere.orWhereNotIn(key, value);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Update like(String field, String match) {
         return mWhere.like(field, match);
@@ -167,6 +170,9 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
         return mWhere.like(field, match, type);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Update orLike(String field, String match) {
         return mWhere.orLike(field, match);
@@ -180,6 +186,9 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
         return mWhere.orLike(field, match, likeType);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Update notLike(String field, String match) {
         return mWhere.notLike(field, match);
@@ -193,6 +202,9 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
         return mWhere.notLike(field, match, likeType);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Update orNotLike(String field, String match) {
         return mWhere.orNotLike(field, match);
