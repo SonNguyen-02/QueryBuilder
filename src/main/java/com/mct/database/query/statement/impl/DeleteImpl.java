@@ -109,7 +109,7 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
      * {@inheritDoc}
      */
     @Override
-    public Delete whereIn(String key, Object[] value) {
+    public Delete whereIn(String key, Object... value) {
         return mWhere.whereIn(key, value);
     }
 
@@ -117,7 +117,7 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
      * {@inheritDoc}
      */
     @Override
-    public Delete orWhereIn(String key, Object[] value) {
+    public Delete orWhereIn(String key, Object... value) {
         return mWhere.orWhereIn(key, value);
     }
 
@@ -125,7 +125,7 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
      * {@inheritDoc}
      */
     @Override
-    public Delete whereNotIn(String key, Object[] value) {
+    public Delete whereNotIn(String key, Object... value) {
         return mWhere.whereNotIn(key, value);
     }
 
@@ -133,8 +133,13 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
      * {@inheritDoc}
      */
     @Override
-    public Delete orWhereNotIn(String key, Object[] value) {
+    public Delete orWhereNotIn(String key, Object... value) {
         return mWhere.orWhereNotIn(key, value);
+    }
+
+    @Override
+    public Delete like(String field, String match) {
+        return mWhere.like(field, match);
     }
 
     /**
@@ -145,6 +150,11 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
         return mWhere.like(field, match, type);
     }
 
+    @Override
+    public Delete orLike(String field, String match) {
+        return mWhere.orLike(field, match);
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -153,12 +163,22 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
         return mWhere.orLike(field, match, likeType);
     }
 
+    @Override
+    public Delete notLike(String field, String match) {
+        return mWhere.notLike(field, match);
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public Delete notLike(String field, String match, LikeType likeType) {
         return mWhere.notLike(field, match, likeType);
+    }
+
+    @Override
+    public Delete orNotLike(String field, String match) {
+        return mWhere.orNotLike(field, match);
     }
 
     /**

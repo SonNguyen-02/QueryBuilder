@@ -126,7 +126,7 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update whereIn(String key, Object[] value) {
+    public Update whereIn(String key, Object... value) {
         return mWhere.whereIn(key, value);
     }
 
@@ -134,7 +134,7 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update orWhereIn(String key, Object[] value) {
+    public Update orWhereIn(String key, Object... value) {
         return mWhere.orWhereIn(key, value);
     }
 
@@ -142,7 +142,7 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update whereNotIn(String key, Object[] value) {
+    public Update whereNotIn(String key, Object... value) {
         return mWhere.whereNotIn(key, value);
     }
 
@@ -150,8 +150,13 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update orWhereNotIn(String key, Object[] value) {
+    public Update orWhereNotIn(String key, Object... value) {
         return mWhere.orWhereNotIn(key, value);
+    }
+
+    @Override
+    public Update like(String field, String match) {
+        return mWhere.like(field, match);
     }
 
     /**
@@ -162,6 +167,11 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
         return mWhere.like(field, match, type);
     }
 
+    @Override
+    public Update orLike(String field, String match) {
+        return mWhere.orLike(field, match);
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -170,12 +180,22 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
         return mWhere.orLike(field, match, likeType);
     }
 
+    @Override
+    public Update notLike(String field, String match) {
+        return mWhere.notLike(field, match);
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public Update notLike(String field, String match, LikeType likeType) {
         return mWhere.notLike(field, match, likeType);
+    }
+
+    @Override
+    public Update orNotLike(String field, String match) {
+        return mWhere.orNotLike(field, match);
     }
 
     /**

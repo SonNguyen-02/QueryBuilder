@@ -165,7 +165,7 @@ public interface Where<T> {
      * <strong>Where In:</strong><br/>
      * Generates a WHERE field IN ('item', 'item') SQL query joined with AND if appropriate<br/>
      * -VD:
-     * <br/>&nbsp;&nbsp;Object[] names = new Object[]{"Frank", "Todd", "James"};
+     * <br/>&nbsp;&nbsp;Object... names = new Object...{"Frank", "Todd", "James"};
      * <br/>&nbsp;&nbsp;where_in('username', names);
      * <br/>
      * -Produces:
@@ -175,13 +175,13 @@ public interface Where<T> {
      * @param value The values searched on
      * @return this
      */
-    T whereIn(String key, Object[] value);
+    T whereIn(String key, Object... value);
 
     /**
      * <strong>Or Where In:</strong><br/>
      * Generates a WHERE field IN ('item', 'item') SQL query joined with OR if appropriate<br/>
      * -VD:
-     * <br/>&nbsp;&nbsp;Object[] names = new Object[]{"Frank", "Todd", "James"};
+     * <br/>&nbsp;&nbsp;Object... names = new Object...{"Frank", "Todd", "James"};
      * <br/>&nbsp;&nbsp;where_in('username', names);
      * <br/>
      * -Produces:
@@ -191,13 +191,13 @@ public interface Where<T> {
      * @param value The values searched on
      * @return this
      */
-    T orWhereIn(String key, Object[] value);
+    T orWhereIn(String key, Object... value);
 
     /**
      * <strong>Where Not In:</strong><br/>
      * Generates a WHERE field IN ('item', 'item') SQL query joined with AND if appropriate<br/>
      * -VD:
-     * <br/>&nbsp;&nbsp;Object[] names = new Object[]{"Frank", "Todd", "James"};
+     * <br/>&nbsp;&nbsp;Object... names = new Object...{"Frank", "Todd", "James"};
      * <br/>&nbsp;&nbsp;where_in('username', names);
      * <br/>
      * -Produces:
@@ -207,13 +207,13 @@ public interface Where<T> {
      * @param value The values searched on
      * @return this
      */
-    T whereNotIn(String key, Object[] value);
+    T whereNotIn(String key, Object... value);
 
     /**
      * <strong>Or Where Not In:</strong><br/>
      * Generates a WHERE field IN ('item', 'item') SQL query joined with OR if appropriate<br/>
      * -VD:
-     * <br/>&nbsp;&nbsp;Object[] names = new Object[]{"Frank", "Todd", "James"};
+     * <br/>&nbsp;&nbsp;Object... names = new Object...{"Frank", "Todd", "James"};
      * <br/>&nbsp;&nbsp;where_in('username', names);
      * <br/>
      * -Produces:
@@ -223,7 +223,17 @@ public interface Where<T> {
      * @param value The values searched on
      * @return this
      */
-    T orWhereNotIn(String key, Object[] value);
+    T orWhereNotIn(String key, Object... value);
+
+    /**
+     * <strong>Like:</strong><br/>
+     * Generates a LIKE portion of the query. Separates multiple calls with AND
+     *
+     * @param field The column to search
+     * @param match The search value
+     * @return this
+     */
+    T like(String field, String match);
 
     /**
      * <strong>Like:</strong><br/>
@@ -240,6 +250,16 @@ public interface Where<T> {
      * <strong>Or Like:</strong><br/>
      * Generates a LIKE portion of the query. Separates multiple calls with OR
      *
+     * @param field The column to search
+     * @param match The search value
+     * @return this
+     */
+    T orLike(String field, String match);
+
+    /**
+     * <strong>Or Like:</strong><br/>
+     * Generates a LIKE portion of the query. Separates multiple calls with OR
+     *
      * @param field    The column to search
      * @param match    The search value
      * @param likeType likeType
@@ -251,12 +271,32 @@ public interface Where<T> {
      * <strong>Not Like:</strong><br/>
      * Generates a NOT LIKE portion of the query. Separates multiple calls with AND
      *
+     * @param field The column to search
+     * @param match The search value
+     * @return this
+     */
+    T notLike(String field, String match);
+
+    /**
+     * <strong>Not Like:</strong><br/>
+     * Generates a NOT LIKE portion of the query. Separates multiple calls with AND
+     *
      * @param field    The column to search
      * @param match    The search value
      * @param likeType likeType
      * @return this
      */
     T notLike(String field, String match, LikeType likeType);
+
+    /**
+     * <strong>Or Not Like:</strong><br/>
+     * Generates a NOT LIKE portion of the query. Separates multiple calls with OR
+     *
+     * @param field    The column to search
+     * @param match    The search value
+     * @return this
+     */
+    T orNotLike(String field, String match);
 
     /**
      * <strong>Or Not Like:</strong><br/>

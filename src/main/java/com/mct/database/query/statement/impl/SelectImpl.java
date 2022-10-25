@@ -157,7 +157,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select whereIn(String key, Object[] value) {
+    public Select whereIn(String key, Object... value) {
         return mWhere.whereIn(key, value);
     }
 
@@ -165,7 +165,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select orWhereIn(String key, Object[] value) {
+    public Select orWhereIn(String key, Object... value) {
         return mWhere.orWhereIn(key, value);
     }
 
@@ -173,7 +173,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select whereNotIn(String key, Object[] value) {
+    public Select whereNotIn(String key, Object... value) {
         return mWhere.whereNotIn(key, value);
     }
 
@@ -181,8 +181,13 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select orWhereNotIn(String key, Object[] value) {
+    public Select orWhereNotIn(String key, Object... value) {
         return mWhere.orWhereNotIn(key, value);
+    }
+
+    @Override
+    public Select like(String field, String match) {
+        return mWhere.like(field, match);
     }
 
     /**
@@ -193,6 +198,11 @@ public class SelectImpl extends BaseStatementImpl implements Select {
         return mWhere.like(field, match, type);
     }
 
+    @Override
+    public Select orLike(String field, String match) {
+        return mWhere.orLike(field, match);
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -201,12 +211,22 @@ public class SelectImpl extends BaseStatementImpl implements Select {
         return mWhere.orLike(field, match, likeType);
     }
 
+    @Override
+    public Select notLike(String field, String match) {
+        return mWhere.notLike(field, match);
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public Select notLike(String field, String match, LikeType likeType) {
         return mWhere.notLike(field, match, likeType);
+    }
+
+    @Override
+    public Select orNotLike(String field, String match) {
+        return mWhere.orNotLike(field, match);
     }
 
     /**
