@@ -27,6 +27,10 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
     public String compile() {
         if (!qbWhere.isEmpty()) {
             String where = Utils.implode(qbWhere, " ");
+            // remove brackets if redundant
+            if (where.startsWith("(") && where.endsWith(")")) {
+                where = where.substring(1, where.length() - 1).trim();
+            }
             /*
              * Clean if condition have an empty group
              * eg: name = 'lol' AND ()   =>   name = 'lol'
