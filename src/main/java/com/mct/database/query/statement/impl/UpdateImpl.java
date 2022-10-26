@@ -4,7 +4,6 @@ import com.mct.database.query.enums.LikeType;
 import com.mct.database.query.ingredient.*;
 import com.mct.database.query.ingredient.impl.*;
 import com.mct.database.query.statement.Update;
-import com.mct.database.query.utils.ClassDebug;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -17,13 +16,13 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
     private final Order<Update> mOrder;
     private final Limit<Update> mLimit;
 
-    public UpdateImpl() {
-        checkCallerClass(ClassDebug.getCallerCallerClassName());
-        mFrom = new FromImpl<>(this);
-        mValue = new ValueImpl<>(this);
-        mWhere = new WhereImpl<>(this);
-        mOrder = new OrderImpl<>(this);
-        mLimit = new LimitImpl<>(this);
+    @SuppressWarnings("unchecked")
+    UpdateImpl() {
+        mFrom = createIngredient(FromImpl.class);
+        mValue = createIngredient(ValueImpl.class);
+        mWhere = createIngredient(WhereImpl.class);
+        mOrder = createIngredient(OrderImpl.class);
+        mLimit = createIngredient(LimitImpl.class);
     }
 
     /**

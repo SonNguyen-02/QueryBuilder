@@ -12,12 +12,11 @@ public class ValueImpl<T extends BaseStatement> extends BaseIngredient<T> implem
 
     private final HashMap<String, Object> qbSet = new HashMap<>();
 
-    public ValueImpl(T statement) {
-        super(statement);
-    }
-
     public HashMap<String, Object> getValues() {
         return new HashMap<>(qbSet);
+    }
+
+    ValueImpl() {
     }
 
     @Override
@@ -44,7 +43,7 @@ public class ValueImpl<T extends BaseStatement> extends BaseIngredient<T> implem
             }
         });
         qbSet.putAll(dataSet);
-        return mStatement;
+        return getStatement();
     }
 
     /**

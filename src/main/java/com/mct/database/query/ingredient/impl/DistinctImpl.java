@@ -7,8 +7,7 @@ public class DistinctImpl<T extends BaseStatement> extends BaseIngredient<T> imp
 
     private boolean mDistinct;
 
-    public DistinctImpl(T statement) {
-        super(statement);
+    DistinctImpl() {
     }
 
     @Override
@@ -27,6 +26,6 @@ public class DistinctImpl<T extends BaseStatement> extends BaseIngredient<T> imp
     @Override
     public T distinct() {
         mDistinct = true;
-        return mStatement;
+        return getStatement();
     }
 }

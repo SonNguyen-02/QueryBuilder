@@ -11,8 +11,7 @@ public class GroupImpl<T extends BaseStatement> extends BaseIngredient<T> implem
 
     private final ArrayList<String> qbGroupBy = new ArrayList<>();
 
-    public GroupImpl(T statement) {
-        super(statement);
+    GroupImpl() {
     }
 
     @Override
@@ -46,6 +45,6 @@ public class GroupImpl<T extends BaseStatement> extends BaseIngredient<T> implem
                 qbGroupBy.add(val.trim());
             }
         }
-        return mStatement;
+        return getStatement();
     }
 }

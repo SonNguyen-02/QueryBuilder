@@ -9,7 +9,6 @@ import com.mct.database.query.ingredient.impl.FromImpl;
 import com.mct.database.query.ingredient.impl.LimitImpl;
 import com.mct.database.query.ingredient.impl.WhereImpl;
 import com.mct.database.query.statement.Delete;
-import com.mct.database.query.utils.ClassDebug;
 import org.jetbrains.annotations.NotNull;
 
 public class DeleteImpl extends BaseStatementImpl implements Delete {
@@ -18,11 +17,11 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
     private final Where<Delete> mWhere;
     private final Limit<Delete> mLimit;
 
-    public DeleteImpl() {
-        checkCallerClass(ClassDebug.getCallerCallerClassName());
-        mFrom = new FromImpl<>(this);
-        mWhere = new WhereImpl<>(this);
-        mLimit = new LimitImpl<>(this);
+    @SuppressWarnings("unchecked")
+    DeleteImpl() {
+        mFrom = createIngredient(FromImpl.class);
+        mWhere = createIngredient(WhereImpl.class);
+        mLimit = createIngredient(LimitImpl.class);
     }
 
     /**

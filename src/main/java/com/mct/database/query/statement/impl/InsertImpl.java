@@ -5,7 +5,6 @@ import com.mct.database.query.ingredient.Value;
 import com.mct.database.query.ingredient.impl.FromImpl;
 import com.mct.database.query.ingredient.impl.ValueImpl;
 import com.mct.database.query.statement.Insert;
-import com.mct.database.query.utils.ClassDebug;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -15,10 +14,10 @@ public class InsertImpl extends BaseStatementImpl implements Insert {
     private final From<Insert> mFrom;
     private final Value<Insert> mValue;
 
-    public InsertImpl() {
-        checkCallerClass(ClassDebug.getCallerCallerClassName());
-        mFrom = new FromImpl<>(this);
-        mValue = new ValueImpl<>(this);
+    @SuppressWarnings("unchecked")
+    InsertImpl() {
+        mFrom = createIngredient(FromImpl.class);
+        mValue = createIngredient(ValueImpl.class);
     }
 
     /**

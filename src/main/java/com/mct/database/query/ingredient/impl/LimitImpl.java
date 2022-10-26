@@ -8,8 +8,7 @@ public class LimitImpl<T extends BaseStatement> extends BaseIngredient<T> implem
     private int qbLimit;
     private int qbOffset;
 
-    public LimitImpl(T statement) {
-        super(statement);
+    LimitImpl() {
     }
 
     @Override
@@ -38,7 +37,7 @@ public class LimitImpl<T extends BaseStatement> extends BaseIngredient<T> implem
         }
         this.qbLimit = limit;
         this.qbOffset = offset;
-        return mStatement;
+        return getStatement();
     }
 
     /**

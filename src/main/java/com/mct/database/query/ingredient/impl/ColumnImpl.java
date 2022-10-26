@@ -11,8 +11,7 @@ public class ColumnImpl<T extends BaseStatement> extends BaseIngredient<T> imple
 
     private final ArrayList<String> qbColumns = new ArrayList<>();
 
-    public ColumnImpl(T statement) {
-        super(statement);
+    ColumnImpl() {
     }
 
     @Override
@@ -47,6 +46,6 @@ public class ColumnImpl<T extends BaseStatement> extends BaseIngredient<T> imple
                 qbColumns.add(val);
             }
         }
-        return mStatement;
+        return getStatement();
     }
 }

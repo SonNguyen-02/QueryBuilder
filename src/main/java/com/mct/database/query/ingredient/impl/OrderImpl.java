@@ -11,8 +11,7 @@ public class OrderImpl<T extends BaseStatement> extends BaseIngredient<T> implem
 
     private final ArrayList<String> qbOrderBy = new ArrayList<>();
 
-    public OrderImpl(T statement) {
-        super(statement);
+    OrderImpl() {
     }
 
     @Override
@@ -41,7 +40,7 @@ public class OrderImpl<T extends BaseStatement> extends BaseIngredient<T> implem
                 this.qbOrderBy.add(val.trim() + direction);
             }
         }
-        return mStatement;
+        return getStatement();
     }
 
     /**

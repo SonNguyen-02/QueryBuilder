@@ -1,13 +1,35 @@
 package com.mct.database.query.statement.impl;
 
-import com.mct.database.query.StatementFactory;
 import com.mct.database.query.ingredient.impl.BaseIngredient;
 import com.mct.database.query.ingredient.impl.ValueImpl;
+import com.mct.database.query.ingredient.impl._IngredientFactory;
 import com.mct.database.query.statement.BaseStatement;
-import com.mct.database.query.utils.exec.IllegalCallerException;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Method;
+
 abstract class BaseStatementImpl implements BaseStatement {
+
+    private final Method createIngredient;
+
+    BaseStatementImpl() {
+        try {
+            createIngredient = _IngredientFactory.class.getDeclaredMethod("newInstance", Class.class, BaseStatement.class);
+            createIngredient.setAccessible(true);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    protected <Ingredient extends BaseIngredient<? extends BaseStatement>>
+    Ingredient createIngredient(@NotNull Class<Ingredient> clazz) {
+        try {
+            return (Ingredient) createIngredient.invoke(null, clazz, this);
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     protected String compile(Object o) {
         return cast(o).compile();
@@ -25,12 +47,6 @@ abstract class BaseStatementImpl implements BaseStatement {
 
     protected BaseIngredient<? extends BaseStatement> cast(Object o) {
         return (BaseIngredient<? extends BaseStatement>) o;
-    }
-
-    protected void checkCallerClass(String callerClass) {
-        if (!StatementFactory.class.getName().equals(callerClass)) {
-            throw new IllegalCallerException("You don't have permission access to class '" + getClass().getSimpleName() + "'.");
-        }
     }
 
     @Override

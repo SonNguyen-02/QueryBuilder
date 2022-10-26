@@ -5,14 +5,13 @@ import com.mct.database.query.enums.LikeType;
 import com.mct.database.query.ingredient.*;
 import com.mct.database.query.ingredient.impl.*;
 import com.mct.database.query.statement.Select;
-import com.mct.database.query.utils.ClassDebug;
 import org.jetbrains.annotations.NotNull;
 
 public class SelectImpl extends BaseStatementImpl implements Select {
 
     private final Column<Select> mColumn;
     private final Distinct<Select> mDistinct;
-    private final From<Select> mFrom;
+      final From<Select> mFrom;
     private final Join<Select> mJoin;
     private final Where<Select> mWhere;
     private final Group<Select> mGroup;
@@ -20,17 +19,17 @@ public class SelectImpl extends BaseStatementImpl implements Select {
     private final Order<Select> mOrder;
     private final Limit<Select> mLimit;
 
-    public SelectImpl() {
-        checkCallerClass(ClassDebug.getCallerCallerClassName());
-        mColumn = new ColumnImpl<>(this);
-        mDistinct = new DistinctImpl<>(this);
-        mFrom = new FromImpl<>(this);
-        mJoin = new JoinImpl<>(this);
-        mWhere = new WhereImpl<>(this);
-        mGroup = new GroupImpl<>(this);
-        mHaving = new HavingImpl<>(this);
-        mOrder = new OrderImpl<>(this);
-        mLimit = new LimitImpl<>(this);
+    @SuppressWarnings("unchecked")
+    SelectImpl() {
+        mColumn = createIngredient(ColumnImpl.class);
+        mDistinct = createIngredient(DistinctImpl.class);
+        mFrom = createIngredient(FromImpl.class);
+        mJoin = createIngredient(JoinImpl.class);
+        mWhere = createIngredient(WhereImpl.class);
+        mGroup = createIngredient(GroupImpl.class);
+        mHaving = createIngredient(HavingImpl.class);
+        mOrder = createIngredient(OrderImpl.class);
+        mLimit = createIngredient(LimitImpl.class);
     }
 
     /**

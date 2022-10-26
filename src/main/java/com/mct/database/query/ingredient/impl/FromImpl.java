@@ -11,8 +11,7 @@ public class FromImpl<T extends BaseStatement> extends BaseIngredient<T> impleme
 
     private final ArrayList<String> qbFrom = new ArrayList<>();
 
-    public FromImpl(T statement) {
-        super(statement);
+    FromImpl() {
     }
 
     @Override
@@ -36,6 +35,6 @@ public class FromImpl<T extends BaseStatement> extends BaseIngredient<T> impleme
         for (String val : from.split(",")) {
             this.qbFrom.add(val.trim());
         }
-        return mStatement;
+        return getStatement();
     }
 }

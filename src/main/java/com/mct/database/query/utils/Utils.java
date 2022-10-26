@@ -33,6 +33,15 @@ public class Utils {
     }
 
     @NotNull
+    public static String replaceAlls(@NotNull String where, String regex) {
+        String rpl;
+        if (!(rpl = where.replaceAll(regex, "").trim()).equals(where)) {
+            return replaceAlls(rpl, regex);
+        }
+        return where;
+    }
+
+    @NotNull
     public static String escape(@NotNull String str) {
         return "'" + escapeStr(str) + "'";
     }

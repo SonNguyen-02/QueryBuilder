@@ -12,8 +12,7 @@ public class HavingImpl<T extends BaseStatement> extends BaseIngredient<T> imple
 
     private final ArrayList<String> qbHaving = new ArrayList<>();
 
-    public HavingImpl(T statement) {
-        super(statement);
+    HavingImpl() {
     }
 
     @Override
@@ -31,12 +30,12 @@ public class HavingImpl<T extends BaseStatement> extends BaseIngredient<T> imple
 
     private T _hv(String key, Object value, String type) {
         qbHaving.add((qbHaving.isEmpty() ? "" : type) + _whv(key, value));
-        return mStatement;
+        return getStatement();
     }
 
     private T _hv(String having, String type) {
         qbHaving.add((qbHaving.isEmpty() ? "" : type) + _whv(having));
-        return mStatement;
+        return getStatement();
     }
 
     /**

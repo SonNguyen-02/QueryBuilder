@@ -7,7 +7,6 @@ import com.mct.database.query.statement.BaseStatement;
 import com.mct.database.query.utils.Utils;
 import com.mct.database.query.utils.exec.BuilderError;
 import org.intellij.lang.annotations.RegExp;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -19,8 +18,7 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
 
     private boolean qbWhereGroupStart;
 
-    public WhereImpl(T statement) {
-        super(statement);
+    WhereImpl() {
     }
 
     @Override
@@ -28,7 +26,7 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
         if (!qbWhere.isEmpty()) {
             String where = Utils.implode(qbWhere, " ");
             // remove brackets if redundant
-            if (where.startsWith("(") && where.endsWith(")")) {
+            if (where.matches("^\\(.*\\)$")) {
                 where = where.substring(1, where.length() - 1).trim();
             }
             /*
@@ -39,8 +37,8 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
                 String tmpRepl = "?";
                 String regex = "'.*?[^\\\\]'";
                 @RegExp
-                String reg = "( *\\( *\\) +(AND|OR)?)|(((AND|OR)( NOT)?)? +\\( *\\) *)";
-                String result = replaceAlls(where.replaceAll(regex, tmpRepl), reg);
+                String reg = "( *\\( *\\)( *(AND|OR))?)|(((AND|OR)( NOT)? *)?\\( *\\) *)";
+                String result = Utils.replaceAlls(where.replaceAll(regex, tmpRepl), reg);
                 Matcher matcher = Pattern.compile(regex).matcher(where);
                 while (matcher.find()) {
                     int find = result.indexOf(tmpRepl);
@@ -100,7 +98,7 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
     @Override
     public T groupEnd() {
         _groupEnd();
-        return mStatement;
+        return getStatement();
     }
 
     /**
@@ -108,12 +106,12 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
      */
     private T _wh(String key, Object value, String type) {
         qbWhere.add(_groupGetType(type) + _whv(key, value));
-        return mStatement;
+        return getStatement();
     }
 
     private T _wh(String where, String type) {
         qbWhere.add(_groupGetType(type) + _whv(where));
-        return mStatement;
+        return getStatement();
     }
 
     /**
@@ -185,7 +183,7 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
                 this.qbWhere.add(whereIn);
             }
         }
-        return mStatement;
+        return getStatement();
     }
 
     /**
@@ -265,7 +263,7 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
             String like = prefix + field + not + " LIKE " + match;
             qbWhere.add(like);
         }
-        return mStatement;
+        return getStatement();
     }
 
     /**
@@ -348,7 +346,7 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
         String prefix = type;
         String whereCondition = prefix + not + "(";
         qbWhere.add(whereCondition);
-        return mStatement;
+        return getStatement();
     }
 
     private void _groupEnd() {
@@ -364,11 +362,4 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
         return qbWhere.isEmpty() ? "" : type;
     }
 
-    private @NotNull String replaceAlls(@NotNull String where, String regex) {
-        String rpl;
-        if (!(rpl = where.replaceAll(regex, "").trim()).equals(where)) {
-            return replaceAlls(rpl, regex);
-        }
-        return where;
-    }
 }

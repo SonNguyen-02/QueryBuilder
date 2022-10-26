@@ -11,8 +11,7 @@ public class JoinImpl<T extends BaseStatement> extends BaseIngredient<T> impleme
 
     private final ArrayList<String> qbJoin = new ArrayList<>();
 
-    public JoinImpl(T statement) {
-        super(statement);
+    JoinImpl() {
     }
 
     @Override
@@ -42,6 +41,6 @@ public class JoinImpl<T extends BaseStatement> extends BaseIngredient<T> impleme
         String join = typeStr + "JOIN " + table + " ON " + cond;
         this.qbJoin.add(join);
 
-        return mStatement;
+        return getStatement();
     }
 }
