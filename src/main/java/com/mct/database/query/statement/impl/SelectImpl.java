@@ -11,7 +11,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
 
     private final Column<Select> mColumn;
     private final Distinct<Select> mDistinct;
-      final From<Select> mFrom;
+    private final From<Select> mFrom;
     private final Join<Select> mJoin;
     private final Where<Select> mWhere;
     private final Group<Select> mGroup;
