@@ -76,39 +76,23 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
      * {@inheritDoc}
      */
     @Override
-    public Delete where(String key, Object value) {
-        return mWhere.where(key, value);
+    public Delete where(@NotNull String condition, Object... value) {
+        return mWhere.where(condition, value);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Delete where(String where) {
-        return mWhere.where(where);
+    public Delete orWhere(@NotNull String condition, Object... value) {
+        return mWhere.orWhere(condition, value);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Delete orWhere(String key, Object value) {
-        return mWhere.orWhere(key, value);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Delete orWhere(String where) {
-        return mWhere.orWhere(where);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Delete whereIn(String key, Object... value) {
+    public Delete whereIn(@NotNull String key, Object... value) {
         return mWhere.whereIn(key, value);
     }
 
@@ -116,7 +100,7 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
      * {@inheritDoc}
      */
     @Override
-    public Delete orWhereIn(String key, Object... value) {
+    public Delete orWhereIn(@NotNull String key, Object... value) {
         return mWhere.orWhereIn(key, value);
     }
 
@@ -124,7 +108,7 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
      * {@inheritDoc}
      */
     @Override
-    public Delete whereNotIn(String key, Object... value) {
+    public Delete whereNotIn(@NotNull String key, Object... value) {
         return mWhere.whereNotIn(key, value);
     }
 
@@ -132,7 +116,7 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
      * {@inheritDoc}
      */
     @Override
-    public Delete orWhereNotIn(String key, Object... value) {
+    public Delete orWhereNotIn(@NotNull String key, Object... value) {
         return mWhere.orWhereNotIn(key, value);
     }
 
@@ -140,7 +124,7 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
      * {@inheritDoc}
      */
     @Override
-    public Delete like(String field, String match) {
+    public Delete like(@NotNull String field, String match) {
         return mWhere.like(field, match);
     }
 
@@ -148,7 +132,7 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
      * {@inheritDoc}
      */
     @Override
-    public Delete like(String field, String match, LikeType type) {
+    public Delete like(@NotNull String field, String match, LikeType type) {
         return mWhere.like(field, match, type);
     }
 
@@ -156,7 +140,7 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
      * {@inheritDoc}
      */
     @Override
-    public Delete orLike(String field, String match) {
+    public Delete orLike(@NotNull String field, String match) {
         return mWhere.orLike(field, match);
     }
 
@@ -164,7 +148,7 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
      * {@inheritDoc}
      */
     @Override
-    public Delete orLike(String field, String match, LikeType likeType) {
+    public Delete orLike(@NotNull String field, String match, LikeType likeType) {
         return mWhere.orLike(field, match, likeType);
     }
 
@@ -172,7 +156,7 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
      * {@inheritDoc}
      */
     @Override
-    public Delete notLike(String field, String match) {
+    public Delete notLike(@NotNull String field, String match) {
         return mWhere.notLike(field, match);
     }
 
@@ -180,7 +164,7 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
      * {@inheritDoc}
      */
     @Override
-    public Delete notLike(String field, String match, LikeType likeType) {
+    public Delete notLike(@NotNull String field, String match, LikeType likeType) {
         return mWhere.notLike(field, match, likeType);
     }
 
@@ -188,7 +172,7 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
      * {@inheritDoc}
      */
     @Override
-    public Delete orNotLike(String field, String match) {
+    public Delete orNotLike(@NotNull String field, String match) {
         return mWhere.orNotLike(field, match);
     }
 
@@ -196,7 +180,7 @@ public class DeleteImpl extends BaseStatementImpl implements Delete {
      * {@inheritDoc}
      */
     @Override
-    public Delete orNotLike(String field, String match, LikeType likeType) {
+    public Delete orNotLike(@NotNull String field, String match, LikeType likeType) {
         return mWhere.orNotLike(field, match, likeType);
     }
 

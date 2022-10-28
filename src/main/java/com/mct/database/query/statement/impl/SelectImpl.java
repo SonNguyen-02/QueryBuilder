@@ -124,39 +124,23 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select where(String key, Object value) {
-        return mWhere.where(key, value);
+    public Select where(@NotNull String condition, Object... value) {
+        return mWhere.where(condition, value);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Select where(String where) {
-        return mWhere.where(where);
+    public Select orWhere(@NotNull String condition, Object... value) {
+        return mWhere.orWhere(condition, value);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Select orWhere(String key, Object value) {
-        return mWhere.orWhere(key, value);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Select orWhere(String where) {
-        return mWhere.orWhere(where);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Select whereIn(String key, Object... value) {
+    public Select whereIn(@NotNull String key, Object... value) {
         return mWhere.whereIn(key, value);
     }
 
@@ -164,7 +148,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select orWhereIn(String key, Object... value) {
+    public Select orWhereIn(@NotNull String key, Object... value) {
         return mWhere.orWhereIn(key, value);
     }
 
@@ -172,7 +156,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select whereNotIn(String key, Object... value) {
+    public Select whereNotIn(@NotNull String key, Object... value) {
         return mWhere.whereNotIn(key, value);
     }
 
@@ -180,7 +164,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select orWhereNotIn(String key, Object... value) {
+    public Select orWhereNotIn(@NotNull String key, Object... value) {
         return mWhere.orWhereNotIn(key, value);
     }
 
@@ -188,7 +172,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select like(String field, String match) {
+    public Select like(@NotNull String field, String match) {
         return mWhere.like(field, match);
     }
 
@@ -196,7 +180,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select like(String field, String match, LikeType type) {
+    public Select like(@NotNull String field, String match, LikeType type) {
         return mWhere.like(field, match, type);
     }
 
@@ -204,7 +188,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select orLike(String field, String match) {
+    public Select orLike(@NotNull String field, String match) {
         return mWhere.orLike(field, match);
     }
 
@@ -212,7 +196,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select orLike(String field, String match, LikeType likeType) {
+    public Select orLike(@NotNull String field, String match, LikeType likeType) {
         return mWhere.orLike(field, match, likeType);
     }
 
@@ -220,7 +204,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select notLike(String field, String match) {
+    public Select notLike(@NotNull String field, String match) {
         return mWhere.notLike(field, match);
     }
 
@@ -228,7 +212,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select notLike(String field, String match, LikeType likeType) {
+    public Select notLike(@NotNull String field, String match, LikeType likeType) {
         return mWhere.notLike(field, match, likeType);
     }
 
@@ -236,7 +220,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select orNotLike(String field, String match) {
+    public Select orNotLike(@NotNull String field, String match) {
         return mWhere.orNotLike(field, match);
     }
 
@@ -244,7 +228,7 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select orNotLike(String field, String match, LikeType likeType) {
+    public Select orNotLike(@NotNull String field, String match, LikeType likeType) {
         return mWhere.orNotLike(field, match, likeType);
     }
 
@@ -268,32 +252,16 @@ public class SelectImpl extends BaseStatementImpl implements Select {
      * {@inheritDoc}
      */
     @Override
-    public Select having(@NotNull String key, Object value) {
-        return mHaving.having(key, value);
+    public Select having(@NotNull String condition, Object... value) {
+        return mHaving.having(condition, value);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Select having(@NotNull String having) {
-        return mHaving.having(having);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Select orHaving(@NotNull String key, Object value) {
-        return mHaving.orHaving(key, value);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Select orHaving(@NotNull String having) {
-        return mHaving.orHaving(having);
+    public Select orHaving(@NotNull String condition, Object... value) {
+        return mHaving.orHaving(condition, value);
     }
 
     /**

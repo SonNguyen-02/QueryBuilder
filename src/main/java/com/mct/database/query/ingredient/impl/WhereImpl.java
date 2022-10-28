@@ -7,6 +7,7 @@ import com.mct.database.query.statement.BaseStatement;
 import com.mct.database.query.utils.Utils;
 import com.mct.database.query.utils.exec.BuilderError;
 import org.intellij.lang.annotations.RegExp;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -102,15 +103,11 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
     }
 
     /**
-     * {@link #_whv(String, Object)}
+     * {@inheritDoc}
      */
-    private T _wh(String key, Object value, String type) {
-        qbWhere.add(_groupGetType(type) + _whv(key, value));
-        return getStatement();
-    }
-
-    private T _wh(String where, String type) {
-        qbWhere.add(_groupGetType(type) + _whv(where));
+    @Override
+    public T where(@NotNull String condition, Object... value) {
+        qbWhere.add(_groupGetType("AND ") + prepareCondition(condition, value));
         return getStatement();
     }
 
@@ -118,32 +115,9 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
      * {@inheritDoc}
      */
     @Override
-    public T where(String key, Object value) {
-        return _wh(key, value, "AND ");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public T where(String where) {
-        return _wh(where, "AND ");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public T orWhere(String key, Object value) {
-        return _wh(key, value, "OR ");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public T orWhere(String where) {
-        return _wh(where, "OR ");
+    public T orWhere(@NotNull String condition, Object... value) {
+        qbWhere.add(_groupGetType("OR ") + prepareCondition(condition, value));
+        return getStatement();
     }
 
     /**
@@ -155,13 +129,13 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
      * {@link Where#whereNotIn(String, Object...)}<br/>
      * {@link Where#orWhereNotIn(String, Object...)}<br/>
      *
+     * @param type   AND || OR
+     * @param not    If the statement was IN or NOT IN
      * @param key    The field to search
      * @param values The values searched on
-     * @param not    If the statement was IN or NOT IN
-     * @param type   AND || OR
      * @return this
      */
-    private T _whereIn(String key, Object[] values, boolean not, String type) {
+    private T _whereIn(String type, boolean not, String key, Object... values) {
         if (key == null || key.trim().isEmpty()) {
             throw new BuilderError("The key is invalid");
         }
@@ -190,32 +164,32 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
      * {@inheritDoc}
      */
     @Override
-    public T whereIn(String key, Object... value) {
-        return _whereIn(key, value, false, "AND ");
+    public T whereIn(@NotNull String key, Object... value) {
+        return _whereIn("AND ", false, key, value);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public T orWhereIn(String key, Object... value) {
-        return _whereIn(key, value, false, "OR ");
+    public T orWhereIn(@NotNull String key, Object... value) {
+        return _whereIn("OR ", false, key, value);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public T whereNotIn(String key, Object... value) {
-        return _whereIn(key, value, true, "AND ");
+    public T whereNotIn(@NotNull String key, Object... value) {
+        return _whereIn("AND ", true, key, value);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public T orWhereNotIn(String key, Object... value) {
-        return _whereIn(key, value, true, "OR ");
+    public T orWhereNotIn(@NotNull String key, Object... value) {
+        return _whereIn("OR ", true, key, value);
     }
 
     /**
@@ -227,21 +201,20 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
      * {@link Where#notLike(String, String, LikeType)}<br/>
      * {@link Where#orNotLike(String, String, LikeType)}<br/>
      *
+     * @param type     AND | OR
+     * @param not      NOT | ''
      * @param field    The column to search
      * @param match    The search value
-     * @param type     AND | OR
      * @param likeType likeType
-     * @param not      NOT | ''
      * @return this
      */
-    private T _like(String field, String match, String type, LikeType likeType, String not) {
-        if (field == null || field.trim().isEmpty()) {
+    private T _like(String type, String not, String field, String match, LikeType likeType) {
+        if (field == null || (field = field.trim()).isEmpty()) {
             throw new BuilderError("The field is invalid");
         }
-        field = field.trim();
         // empty -> skip this statement
-        if (match != null && !match.trim().isEmpty()) {
-            match = Utils.escapeLikeStr(match.trim());
+        if (match != null && !(match = match.trim()).isEmpty()) {
+            match = Utils.escapeLikeStr(match);
             if (likeType == null) likeType = LikeType.BOTH;
             //noinspection EnhancedSwitchMigration
             switch (likeType) {
@@ -270,64 +243,64 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
      * {@inheritDoc}
      */
     @Override
-    public T like(String field, String match) {
-        return _like(field, match, "AND ", null, "");
+    public T like(@NotNull String field, String match) {
+        return like(field, match, null);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public T like(String field, String match, LikeType type) {
-        return _like(field, match, "AND ", type, "");
+    public T like(@NotNull String field, String match, LikeType type) {
+        return _like("AND ", "", field, match, type);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public T orLike(String field, String match) {
-        return _like(field, match, "OR ", null, "");
+    public T orLike(@NotNull String field, String match) {
+        return orLike(field, match, null);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public T orLike(String field, String match, LikeType likeType) {
-        return _like(field, match, "OR ", likeType, "");
+    public T orLike(@NotNull String field, String match, LikeType likeType) {
+        return _like("OR ", "", field, match, likeType);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public T notLike(String field, String match) {
-        return _like(field, match, "AND ", null, " NOT");
+    public T notLike(@NotNull String field, String match) {
+        return notLike(field, match, null);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public T notLike(String field, String match, LikeType likeType) {
-        return _like(field, match, "AND ", likeType, " NOT");
+    public T notLike(@NotNull String field, String match, LikeType likeType) {
+        return _like("AND ", " NOT", field, match, likeType);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public T orNotLike(String field, String match) {
-        return _like(field, match, "OR ", null, " NOT");
+    public T orNotLike(@NotNull String field, String match) {
+        return orNotLike(field, match, null);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public T orNotLike(String field, String match, LikeType likeType) {
-        return _like(field, match, "OR ", likeType, " NOT");
+    public T orNotLike(@NotNull String field, String match, LikeType likeType) {
+        return _like("OR ", " NOT", field, match, likeType);
     }
 
     /**
@@ -356,8 +329,8 @@ public class WhereImpl<T extends BaseStatement> extends BaseIngredient<T> implem
 
     private String _groupGetType(String type) {
         if (qbWhereGroupStart) {
-            type = "";
             qbWhereGroupStart = false;
+            type = "";
         }
         return qbWhere.isEmpty() ? "" : type;
     }

@@ -4,67 +4,56 @@ import com.mct.database.query.utils.exec.BuilderError;
 import com.mct.database.query.utils.Utils;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public interface Condition {
 
     /**
-     * <strong>_whv:</strong> Combine key value pair<br/>
+     * <strong>prepareCondition:</strong> Combine condition params and<br/>
      * <p/>
      * Called by<br/>
-     * {@link Having#having(String, Object)}<br/>
-     * {@link Having#orHaving(String, Object)}<br/>
-     * {@link Where#where(String, Object)}<br/>
-     * {@link Where#orWhere(String, Object)}<br/>
+     * {@link Having#having(String, Object...)}<br/>
+     * {@link Having#orHaving(String, Object...)}<br/>
+     * {@link Where#where(String, Object...)}<br/>
+     * {@link Where#orWhere(String, Object...)}<br/>
      *
-     * @param key   key
-     * @param value value
+     * @param condition condition
+     * @param value     value
      * @return this
      */
     @NotNull
-    default String _whv(String key, Object value) {
-        if (key == null || (key = key.trim()).isEmpty()) {
-            throw new BuilderError("The key is invalid");
+    default String prepareCondition(String condition, Object... value) {
+        if (condition == null || (condition = condition.trim()).isEmpty()) {
+            throw new BuilderError("The condition is invalid");
         }
-        String mVal = value == null ? "" : value.toString().trim();
-        String keyLower = key.toLowerCase();
+        if (condition.matches(".*\\? *\\?.*")) {
+            throw new BuilderError("The condition param placeholder invalid!");
+        }
+        if (condition.startsWith("?") || condition.endsWith("?")) {
+            condition = " " + condition + " ";
+        }
+        StringBuilder result = new StringBuilder();
+        String reg = " +\\? +";
+        int totalParameter = 0;
+        Matcher matcher = Pattern.compile(reg).matcher(condition);
+        while (matcher.find()) totalParameter++;
 
-        if (_hasOperator(keyLower)) {
-            if (!keyLower.matches("[\\w.]+\\s+(is null|is not null)")) {
-                key += " ";
-                mVal = Utils.escape(mVal);
+        String[] conditionSplit = condition.split(reg);
+        for (int i = 0; i < conditionSplit.length; i++) {
+            String val = "";
+            if (i < totalParameter) {
+                if (value != null && i < value.length && value[i] != null) {
+                    if (!(val = value[i].toString().trim()).isEmpty()) {
+                        val = Utils.escape(val);
+                    }
+                } else {
+                    val = "** NOT SPECIFIED **";
+                }
             }
-        } else {
-            if (mVal.isEmpty()) {
-                key += " IS NULL";
-            } else {
-                key += " = ";
-                mVal = Utils.escape(mVal);
-            }
+            result.append(conditionSplit[i]).append(" ").append(val).append(" ");
         }
-        return key + mVal;
-    }
-
-    /**
-     * <strong>_whv:</strong><br/>
-     * <p/>
-     * Called by<br/>
-     * {@link Having#having(String)}<br/>
-     * {@link Having#orHaving(String)}<br/>
-     * {@link Where#where(String)}<br/>
-     * {@link Where#orWhere(String)}<br/>
-     *
-     * @param whereOrHaving whereOrHaving
-     * @return this
-     */
-    default String _whv(String whereOrHaving) {
-        if (whereOrHaving == null || whereOrHaving.trim().isEmpty()) {
-            throw new BuilderError("Statement can't null or empty");
-        }
-        return whereOrHaving.trim();
-    }
-
-    static boolean _hasOperator(@NotNull String str) {
-        String reg = "[\\w.]+\\s+(<|>|!=|=|>=|<=|is null|is not null)";
-        return str.matches(reg);
+        return result.toString().trim();
     }
 
 }

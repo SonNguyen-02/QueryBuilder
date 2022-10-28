@@ -18,7 +18,7 @@ public class HavingImpl<T extends BaseStatement> extends BaseIngredient<T> imple
     @Override
     public String compile() {
         if (!qbHaving.isEmpty()) {
-            return Utils.implode(qbHaving, "\n");
+            return Utils.implode(qbHaving, " ");
         }
         return "";
     }
@@ -28,46 +28,21 @@ public class HavingImpl<T extends BaseStatement> extends BaseIngredient<T> imple
         qbHaving.clear();
     }
 
-    private T _hv(String key, Object value, String type) {
-        qbHaving.add((qbHaving.isEmpty() ? "" : type) + _whv(key, value));
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public T having(@NotNull String condition, Object... value) {
+        qbHaving.add((qbHaving.isEmpty() ? "" : "AND ") + prepareCondition(condition, value));
         return getStatement();
     }
 
-    private T _hv(String having, String type) {
-        qbHaving.add((qbHaving.isEmpty() ? "" : type) + _whv(having));
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public T orHaving(@NotNull String condition, Object... value) {
+        qbHaving.add((qbHaving.isEmpty() ? "" : "OR ") + prepareCondition(condition, value));
         return getStatement();
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public T having(@NotNull String key, Object value) {
-        return _hv(key, value, "AND ");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public T having(@NotNull String having) {
-        return _hv(having, "AND ");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public T orHaving(@NotNull String key, Object value) {
-        return _hv(key, value, "OR ");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public T orHaving(@NotNull String having) {
-        return _hv(having, "OR ");
-    }
-
 }

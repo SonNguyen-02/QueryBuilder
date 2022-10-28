@@ -93,39 +93,23 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update where(String key, Object value) {
-        return mWhere.where(key, value);
+    public Update where(@NotNull String condition, Object... value) {
+        return mWhere.where(condition, value);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Update where(String where) {
-        return mWhere.where(where);
+    public Update orWhere(@NotNull String condition, Object... value) {
+        return mWhere.orWhere(condition, value);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Update orWhere(String key, Object value) {
-        return mWhere.orWhere(key, value);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Update orWhere(String where) {
-        return mWhere.orWhere(where);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Update whereIn(String key, Object... value) {
+    public Update whereIn(@NotNull String key, Object... value) {
         return mWhere.whereIn(key, value);
     }
 
@@ -133,7 +117,7 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update orWhereIn(String key, Object... value) {
+    public Update orWhereIn(@NotNull String key, Object... value) {
         return mWhere.orWhereIn(key, value);
     }
 
@@ -141,7 +125,7 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update whereNotIn(String key, Object... value) {
+    public Update whereNotIn(@NotNull String key, Object... value) {
         return mWhere.whereNotIn(key, value);
     }
 
@@ -149,7 +133,7 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update orWhereNotIn(String key, Object... value) {
+    public Update orWhereNotIn(@NotNull String key, Object... value) {
         return mWhere.orWhereNotIn(key, value);
     }
 
@@ -157,7 +141,7 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update like(String field, String match) {
+    public Update like(@NotNull String field, String match) {
         return mWhere.like(field, match);
     }
 
@@ -165,7 +149,7 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update like(String field, String match, LikeType type) {
+    public Update like(@NotNull String field, String match, LikeType type) {
         return mWhere.like(field, match, type);
     }
 
@@ -173,7 +157,7 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update orLike(String field, String match) {
+    public Update orLike(@NotNull String field, String match) {
         return mWhere.orLike(field, match);
     }
 
@@ -181,7 +165,7 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update orLike(String field, String match, LikeType likeType) {
+    public Update orLike(@NotNull String field, String match, LikeType likeType) {
         return mWhere.orLike(field, match, likeType);
     }
 
@@ -189,7 +173,7 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update notLike(String field, String match) {
+    public Update notLike(@NotNull String field, String match) {
         return mWhere.notLike(field, match);
     }
 
@@ -197,7 +181,7 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update notLike(String field, String match, LikeType likeType) {
+    public Update notLike(@NotNull String field, String match, LikeType likeType) {
         return mWhere.notLike(field, match, likeType);
     }
 
@@ -205,7 +189,7 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update orNotLike(String field, String match) {
+    public Update orNotLike(@NotNull String field, String match) {
         return mWhere.orNotLike(field, match);
     }
 
@@ -213,7 +197,7 @@ public class UpdateImpl extends BaseStatementImpl implements Update {
      * {@inheritDoc}
      */
     @Override
-    public Update orNotLike(String field, String match, LikeType likeType) {
+    public Update orNotLike(@NotNull String field, String match, LikeType likeType) {
         return mWhere.orNotLike(field, match, likeType);
     }
 

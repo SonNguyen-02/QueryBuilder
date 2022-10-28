@@ -1,6 +1,7 @@
 package com.mct.database.query.ingredient;
 
 import com.mct.database.query.enums.LikeType;
+import org.jetbrains.annotations.NotNull;
 
 public interface Where<T> {
 
@@ -9,16 +10,16 @@ public interface Where<T> {
      * -VD: <br/>
      * <pre>
      * groupStart()
-     *     .where('name', 'Tom')
+     *     .where('name = ?', 'Tom')
      *     .orGroupStart()
-     *         .where('age', '10')
-     *         .where('gender', 'male')
+     *         .where('age = ?', '10')
+     *         .where('gender = ?', 'male')
      *     .group_end()
      * .group_end()
-     * .like("email", "admin", "both")
+     * .like("email", "admin")
      * </pre>
      * -Produces: <br/>
-     * ( name = 'Tom' OR ( age = '10' AND gender = male ) ) AND email like('%admin%')
+     * ( name = 'Tom' OR ( age = '10' AND gender = 'male' ) ) AND email like('%admin%')
      *
      * @return this
      */
@@ -29,16 +30,16 @@ public interface Where<T> {
      * -VD: <br/>
      * <pre>
      * groupStart()
-     *     .where('name', 'Tom')
+     *     .where('name = ?', 'Tom')
      *     .orGroupStart()
-     *         .where('age', '10')
-     *         .where('gender', 'male')
+     *         .where('age = ?', '10')
+     *         .where('gender = ?', 'male')
      *     .group_end()
      * .group_end()
-     * .like("email", "admin", "both")
+     * .like("email", "admin")
      * </pre>
      * -Produces: <br/>
-     * ( name = 'Tom' OR ( age = '10' AND gender = male ) ) AND email like('%admin%')
+     * ( name = 'Tom' OR ( age = '10' AND gender = 'male' ) ) AND email like('%admin%')
      *
      * @return this
      */
@@ -49,16 +50,16 @@ public interface Where<T> {
      * -VD: <br/>
      * <pre>
      * groupStart()
-     *     .where('name', 'Tom')
+     *     .where('name = ?', 'Tom')
      *     .orGroupStart()
-     *         .where('age', '10')
-     *         .where('gender', 'male')
+     *         .where('age = ?', '10')
+     *         .where('gender = ?', 'male')
      *     .group_end()
      * .group_end()
-     * .like("email", "admin", "both")
+     * .like("email", "admin")
      * </pre>
      * -Produces: <br/>
-     * ( name = 'Tom' OR ( age = '10' AND gender = male ) ) AND email like('%admin%')
+     * ( name = 'Tom' OR ( age = '10' AND gender = 'male' ) ) AND email like('%admin%')
      *
      * @return this
      */
@@ -69,16 +70,16 @@ public interface Where<T> {
      * -VD: <br/>
      * <pre>
      * groupStart()
-     *     .where('name', 'Tom')
+     *     .where('name = ?', 'Tom')
      *     .orGroupStart()
-     *         .where('age', '10')
-     *         .where('gender', 'male')
+     *         .where('age = ?', '10')
+     *         .where('gender = ?', 'male')
      *     .group_end()
      * .group_end()
-     * .like("email", "admin", "both")
+     * .like("email", "admin")
      * </pre>
      * -Produces: <br/>
-     * ( name = 'Tom' OR ( age = '10' AND gender = male ) ) AND email like('%admin%')
+     * ( name = 'Tom' OR ( age = '10' AND gender = 'male' ) ) AND email like('%admin%')
      *
      * @return this
      */
@@ -94,78 +95,57 @@ public interface Where<T> {
 
     /**
      * <strong>Where:</strong><br/>
-     * Generates the WHERE portion of the query. Separates multiple calls
-     * with AND.<br/>
+     * Generates the WHERE condition of the query. Separates multiple calls with AND.<br/>
      * -VD:
-     * <br/>&nbsp;&nbsp;where("id", "1");
-     * <br/>&nbsp;&nbsp;where("age !=", "15");
-     * <br/>&nbsp;&nbsp;where("age is null", "");
+     * <br/>&nbsp;&nbsp;where("id = ?", 1);
+     * <br/>&nbsp;&nbsp;where("age != ?", 15);
+     * <br/>&nbsp;&nbsp;where("age is null");
      * <br/>
      * -Produces:
      * <br/>&nbsp;&nbsp;WHERE id = '1';
      * <br/>&nbsp;&nbsp;AND age != '15';
      * <br/>&nbsp;&nbsp;AND age is null;
-     *
-     * @param key   The field to search
-     * @param value The value searched on
-     * @return this
-     */
-    T where(String key, Object value);
-
-    /**
-     * <strong>Where:</strong><br/>
-     * SQL query joined with AND if appropriate<br/>
-     * -VD:
-     * <br/>&nbsp;&nbsp;String whereStr = "name='Joe' AND status='boss'";
-     * <br/>&nbsp;&nbsp;where(whereStr);
      * <br/>
-     * -Produces:
-     * <br/>&nbsp;&nbsp;WHERE name='Joe' AND status='boss';
+     * <b>-Note:</b><br/>
+     * Conditional sentences must not contain 2 question marks next to each other.<br/>
+     * <span style="color: #ff4c18">eg: .where("id = ? ?", 1) => An error throw</span><p/>
      *
-     * @param where where
+     * @param condition The field to search
+     * @param value     The value searched on
      * @return this
+     * <br/>see {@link Condition#prepareCondition(String, Object...)}
      */
-    T where(String where);
+    T where(@NotNull String condition, Object... value);
 
     /**
      * <strong>Or Where:</strong><br/>
-     * Generates the WHERE portion of the query. Separates multiple calls with OR.<br/>
+     * Generates the WHERE condition of the query. Separates multiple calls with OR.<br/>
      * -VD:
-     * <br/>&nbsp;&nbsp;orWhere("id", "1");
-     * <br/>&nbsp;&nbsp;orWhere("age !=", "15");
-     * <br/>&nbsp;&nbsp;orWhere("age is null", "");
+     * <br/>&nbsp;&nbsp;orWhere("id = ?", 1);
+     * <br/>&nbsp;&nbsp;orWhere("age != ?", 15);
+     * <br/>&nbsp;&nbsp;orWhere("age is null");
      * <br/>
      * -Produces:
      * <br/>&nbsp;&nbsp;OR id = '1';
      * <br/>&nbsp;&nbsp;OR age != '15';
      * <br/>&nbsp;&nbsp;OR age is null;
-     *
-     * @param key   The field to search
-     * @param value The value searched on
-     * @return this
-     */
-    T orWhere(String key, Object value);
-
-    /**
-     * <strong>Or Where:</strong><br/>
-     * SQL query joined with OR if appropriate<br/>
-     * -VD:
-     * <br/>&nbsp;&nbsp;String whereStr = "name='Joe' AND status='boss'";
-     * <br/>&nbsp;&nbsp;where(whereStr);
      * <br/>
-     * -Produces:
-     * <br/>&nbsp;&nbsp;WHERE name='Joe' AND status='boss';
+     * <b>-Note:</b><br/>
+     * Conditional sentences must not contain 2 question marks next to each other.<br/>
+     * <span style="color: #ff4c18">eg: .orWhere("id = ? ?", 1) => An error throw</span><p/>
      *
-     * @param where where
+     * @param condition The field to search
+     * @param value     The value searched on
      * @return this
+     * <br/>see {@link Condition#prepareCondition(String, Object...)}
      */
-    T orWhere(String where);
+    T orWhere(@NotNull String condition, Object... value);
 
     /**
      * <strong>Where In:</strong><br/>
      * Generates a WHERE field IN ('item', 'item') SQL query joined with AND if appropriate<br/>
      * -VD:
-     * <br/>&nbsp;&nbsp;Object... names = new Object...{"Frank", "Todd", "James"};
+     * <br/>&nbsp;&nbsp;Object[] names = new Object[]{"Frank", "Todd", "James"};
      * <br/>&nbsp;&nbsp;where_in('username', names);
      * <br/>
      * -Produces:
@@ -175,13 +155,13 @@ public interface Where<T> {
      * @param value The values searched on
      * @return this
      */
-    T whereIn(String key, Object... value);
+    T whereIn(@NotNull String key, Object... value);
 
     /**
      * <strong>Or Where In:</strong><br/>
      * Generates a WHERE field IN ('item', 'item') SQL query joined with OR if appropriate<br/>
      * -VD:
-     * <br/>&nbsp;&nbsp;Object... names = new Object...{"Frank", "Todd", "James"};
+     * <br/>&nbsp;&nbsp;Object[] names = new Object[]{"Frank", "Todd", "James"};
      * <br/>&nbsp;&nbsp;where_in('username', names);
      * <br/>
      * -Produces:
@@ -191,13 +171,13 @@ public interface Where<T> {
      * @param value The values searched on
      * @return this
      */
-    T orWhereIn(String key, Object... value);
+    T orWhereIn(@NotNull String key, Object... value);
 
     /**
      * <strong>Where Not In:</strong><br/>
      * Generates a WHERE field IN ('item', 'item') SQL query joined with AND if appropriate<br/>
      * -VD:
-     * <br/>&nbsp;&nbsp;Object... names = new Object...{"Frank", "Todd", "James"};
+     * <br/>&nbsp;&nbsp;Object[] names = new Object[]{"Frank", "Todd", "James"};
      * <br/>&nbsp;&nbsp;where_in('username', names);
      * <br/>
      * -Produces:
@@ -207,13 +187,13 @@ public interface Where<T> {
      * @param value The values searched on
      * @return this
      */
-    T whereNotIn(String key, Object... value);
+    T whereNotIn(@NotNull String key, Object... value);
 
     /**
      * <strong>Or Where Not In:</strong><br/>
      * Generates a WHERE field IN ('item', 'item') SQL query joined with OR if appropriate<br/>
      * -VD:
-     * <br/>&nbsp;&nbsp;Object... names = new Object...{"Frank", "Todd", "James"};
+     * <br/>&nbsp;&nbsp;Object[] names = new Object[]{"Frank", "Todd", "James"};
      * <br/>&nbsp;&nbsp;where_in('username', names);
      * <br/>
      * -Produces:
@@ -223,7 +203,7 @@ public interface Where<T> {
      * @param value The values searched on
      * @return this
      */
-    T orWhereNotIn(String key, Object... value);
+    T orWhereNotIn(@NotNull String key, Object... value);
 
     /**
      * <strong>Like:</strong><br/>
@@ -233,7 +213,7 @@ public interface Where<T> {
      * @param match The search value
      * @return this
      */
-    T like(String field, String match);
+    T like(@NotNull String field, String match);
 
     /**
      * <strong>Like:</strong><br/>
@@ -244,7 +224,7 @@ public interface Where<T> {
      * @param type  type
      * @return this
      */
-    T like(String field, String match, LikeType type);
+    T like(@NotNull String field, String match, LikeType type);
 
     /**
      * <strong>Or Like:</strong><br/>
@@ -254,7 +234,7 @@ public interface Where<T> {
      * @param match The search value
      * @return this
      */
-    T orLike(String field, String match);
+    T orLike(@NotNull String field, String match);
 
     /**
      * <strong>Or Like:</strong><br/>
@@ -265,7 +245,7 @@ public interface Where<T> {
      * @param likeType likeType
      * @return this
      */
-    T orLike(String field, String match, LikeType likeType);
+    T orLike(@NotNull String field, String match, LikeType likeType);
 
     /**
      * <strong>Not Like:</strong><br/>
@@ -275,7 +255,7 @@ public interface Where<T> {
      * @param match The search value
      * @return this
      */
-    T notLike(String field, String match);
+    T notLike(@NotNull String field, String match);
 
     /**
      * <strong>Not Like:</strong><br/>
@@ -286,17 +266,17 @@ public interface Where<T> {
      * @param likeType likeType
      * @return this
      */
-    T notLike(String field, String match, LikeType likeType);
+    T notLike(@NotNull String field, String match, LikeType likeType);
 
     /**
      * <strong>Or Not Like:</strong><br/>
      * Generates a NOT LIKE portion of the query. Separates multiple calls with OR
      *
-     * @param field    The column to search
-     * @param match    The search value
+     * @param field The column to search
+     * @param match The search value
      * @return this
      */
-    T orNotLike(String field, String match);
+    T orNotLike(@NotNull String field, String match);
 
     /**
      * <strong>Or Not Like:</strong><br/>
@@ -307,5 +287,5 @@ public interface Where<T> {
      * @param likeType likeType
      * @return this
      */
-    T orNotLike(String field, String match, LikeType likeType);
+    T orNotLike(@NotNull String field, String match, LikeType likeType);
 }
